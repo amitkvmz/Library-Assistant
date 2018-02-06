@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" maxHeight="253.0" maxWidth="452.0" prefHeight="253.0" prefWidth="452.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="library.assistant.ui.addbook.BookAddController">
+   <children>
+      <VBox layoutY="-13.0" prefHeight="255.0" prefWidth="452.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXTextField fx:id="title" labelFloat="true" prefHeight="25.0" prefWidth="315.0" promptText="Book Title">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="id" labelFloat="true" layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="432.0" promptText="Book ID">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="author" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Book Author">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="publisher" labelFloat="true" layoutX="10.0" layoutY="35.0" promptText="Publisher">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            <HBox prefHeight="54.0" prefWidth="452.0">
+               <children>
+                  <JFXButton id="save" fx:id="saveButton" buttonType="RAISED" onAction="#addBook" prefHeight="37.0" prefWidth="385.0" style="-fx-background-radius: 5;" stylesheets="@addbook.css" text="Save" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton id="cancel" fx:id="cancelButton" buttonType="RAISED" onAction="#cancel" prefHeight="37.0" prefWidth="385.0" style="-fx-background-radius: 5;" styleClass="jfx-button" stylesheets="@addbook.css" text="Cancel">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
