@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Feb 06 12:20:51 IST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0161-69e1-a585-000005f92c80 
-on database directory C:\Users\xyx\OneDrive\Documents\Library Assistant\database with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
-Loaded from file:/C:/Users/xyx/OneDrive/Documents/Library%20Assistant/dist/run1924755167/lib/derby.jar
+Wed Feb 07 11:23:01 IST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0161-6ed3-1131-00000601db28 
+on database directory C:\Users\xyx\OneDrive\Documents\GitHub\Library-Assistant\Library Assistant\database with class loader sun.misc.Launcher$AppClassLoader@5c647e05 
+Loaded from file:/C:/Users/xyx/OneDrive/Documents/GitHub/Library-Assistant/Library%20Assistant/dist/run1615171229/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_45-b15
-user.dir=C:\Users\xyx\OneDrive\Documents\Library Assistant
+user.dir=C:\Users\xyx\OneDrive\Documents\GitHub\Library-Assistant\Library Assistant
 os.name=Windows 8.1
 os.arch=amd64
 os.version=6.3

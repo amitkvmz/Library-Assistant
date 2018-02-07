@@ -18,6 +18,7 @@ public final class DatabaseHandler {
     public DatabaseHandler() throws SQLException {
         createConnection();
         setupBookTable();
+        setupMemberTable();
     }
 
     void createConnection() throws SQLException {
@@ -38,12 +39,11 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if (tables.next()) {
-              System.out.println("Table" + TABLE_NAME + " already exists. we are ready");
-               //  stmt.execute("drop table "+TABLE_NAME);
-             //       System.out.println("dropping table");
+                System.out.println("Table" + TABLE_NAME + " already exists. we are ready");
+                //  stmt.execute("drop table "+TABLE_NAME);
+                //       System.out.println("dropping table");
             } else {
 
-                   
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     id varchar(200) primary Key, \n"
                         + "     title varchar(200), \n   "
@@ -82,5 +82,31 @@ public final class DatabaseHandler {
             return false;
         }
 
+    }
+
+    private void setupMemberTable() {
+        String TABLE_NAME = "MEMBER";
+        try {
+            stmt = conn.createStatement();
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+            if (tables.next()) {
+                System.out.println("Table" + TABLE_NAME + " already exists. we are ready");
+                //  stmt.execute("drop table "+TABLE_NAME);
+                //       System.out.println("dropping table");
+            } else {
+
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "     id varchar(200) primary Key, \n"
+                        + "     name varchar(200), \n   "
+                        + "     mobile varchar(200), \n "
+                        + "     email varchar(100) \n "
+                        + " )");
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
