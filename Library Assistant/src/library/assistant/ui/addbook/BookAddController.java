@@ -50,11 +50,10 @@ public class BookAddController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         try {
-            databaseHandler = new DatabaseHandler();
+            databaseHandler = DatabaseHandler.getInstance();
             checkData();
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
 
     }

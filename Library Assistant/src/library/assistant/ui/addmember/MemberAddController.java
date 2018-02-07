@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
 
 /**
@@ -64,7 +65,7 @@ public class MemberAddController implements Initializable {
             return;
         }else {
             try {
-                DatabaseHandler handler = new DatabaseHandler();
+                DatabaseHandler handler = DatabaseHandler.getInstance();
                 
                 String query = "INSERT INTO MEMBER VALUES ( '"+gid+"','"+gname+"','"+gmobile+"','"+gemail+"')";
                 if(handler.execAction(query)) {
@@ -78,7 +79,6 @@ public class MemberAddController implements Initializable {
                 
                 
             } catch (SQLException ex) {
-                ex.printStackTrace();
                 Logger.getLogger(MemberAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -90,6 +90,8 @@ public class MemberAddController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
+        Stage st = (Stage)rootPane.getScene().getWindow();
+        st.close();
     }
     
 }

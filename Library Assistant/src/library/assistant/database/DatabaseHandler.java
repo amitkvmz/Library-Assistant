@@ -10,24 +10,38 @@ import javax.swing.JOptionPane;
 
 public final class DatabaseHandler {
 
-    private static DatabaseHandler handler;
-    private static final String DB_Url = "jdbc:derby:database;create=true";
+    private static DatabaseHandler handler = null;
+    private static final String DB_URL = "jdbc:derby:database;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
 
-    public DatabaseHandler() throws SQLException {
+    private DatabaseHandler() throws SQLException {
         createConnection();
         setupBookTable();
         setupMemberTable();
     }
 
+    public static DatabaseHandler getInstance() throws SQLException {
+        try {
+            if (handler == null) {
+                handler = new DatabaseHandler();
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+
+        }
+        return handler;
+
+    }
+
     void createConnection() throws SQLException {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-            conn = DriverManager.getConnection(DB_Url);
+            conn = DriverManager.getConnection(DB_URL);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex) {
         }
 
     }
@@ -54,8 +68,7 @@ public final class DatabaseHandler {
 
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
     }
 
@@ -105,8 +118,8 @@ public final class DatabaseHandler {
 
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
