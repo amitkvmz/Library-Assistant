@@ -130,14 +130,14 @@
                                        <children>
                                           <HBox fx:id="book_info" alignment="CENTER" prefHeight="236.0" prefWidth="530.0" style="-fx-background-color: #fde3a7;">
                                              <children>
-                                                <TextField alignment="CENTER" prefHeight="25.0" prefWidth="275.0" promptText="Book ID">
+                                                <TextField fx:id="book_id_input" alignment="CENTER" onAction="#getBookInfo" prefHeight="25.0" prefWidth="275.0" promptText="Book ID">
                                                    <HBox.margin>
                                                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                                                    </HBox.margin>
                                                 </TextField>
-                                                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="381.0">
+                                                <VBox fx:id="book_info_label" alignment="CENTER" prefHeight="100.0" prefWidth="381.0" style="-fx-background-color: #90c695;">
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Book Name" textAlignment="CENTER">
+                                                      <Text fx:id="book_name_output" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Name" textAlignment="CENTER">
                                                          <VBox.margin>
                                                             <Insets bottom="10.0" top="10.0" />
                                                          </VBox.margin>
@@ -145,7 +145,7 @@
                                                             <Font size="14.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" textAlignment="CENTER">
+                                                      <Text fx:id="author_output" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" textAlignment="CENTER">
                                                          <VBox.margin>
                                                             <Insets bottom="10.0" />
                                                          </VBox.margin>
@@ -153,14 +153,14 @@
                                                             <Font size="14.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="103.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" textAlignment="CENTER">
+                                                      <Text fx:id="status_output" layoutX="103.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" textAlignment="CENTER">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
                                                       </Text>
                                                    </children>
                                                    <HBox.margin>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </HBox.margin>
                                                 </VBox>
                                              </children>
@@ -170,14 +170,14 @@
                                           </HBox>
                                           <HBox fx:id="member_info" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="233.0" prefWidth="530.0" style="-fx-background-color: #fde3a7;">
                                              <children>
-                                                <TextField alignment="CENTER" prefHeight="25.0" prefWidth="275.0" promptText="Member Id">
+                                                <TextField fx:id="member_id_input" alignment="CENTER" onAction="#getMemberInfo" prefHeight="25.0" prefWidth="275.0" promptText="Member Id">
                                                    <HBox.margin>
                                                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                                                    </HBox.margin>
                                                 </TextField>
-                                                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="381.0">
+                                                <VBox fx:id="member_info_label" alignment="CENTER" prefHeight="100.0" prefWidth="381.0" style="-fx-background-color: #90c695;">
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Member Name" textAlignment="CENTER">
+                                                      <Text fx:id="member_name_output" strokeType="OUTSIDE" strokeWidth="0.0" text="Member Name" textAlignment="CENTER">
                                                          <VBox.margin>
                                                             <Insets bottom="10.0" top="10.0" />
                                                          </VBox.margin>
@@ -185,7 +185,7 @@
                                                             <Font size="14.0" />
                                                          </font>
                                                       </Text>
-                                                      <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" textAlignment="CENTER">
+                                                      <Text fx:id="mobile_output" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" textAlignment="CENTER">
                                                          <VBox.margin>
                                                             <Insets bottom="10.0" />
                                                          </VBox.margin>
@@ -195,7 +195,7 @@
                                                       </Text>
                                                    </children>
                                                    <HBox.margin>
-                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </HBox.margin>
                                                 </VBox>
                                              </children>
@@ -203,7 +203,7 @@
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                                              </VBox.margin>
                                           </HBox>
-                                          <JFXButton alignment="CENTER" buttonType="RAISED" prefHeight="102.0" prefWidth="120.0" ripplerFill="#6e8a61" style="-fx-background-color: #36d7b7;" text="Button">
+                                          <JFXButton alignment="CENTER" buttonType="RAISED" prefHeight="102.0" prefWidth="120.0" ripplerFill="#6e8a61" style="-fx-background-color: #36d7b7;" text="Issue">
                                              <VBox.margin>
                                                 <Insets bottom="20.0" top="20.0" />
                                              </VBox.margin>
