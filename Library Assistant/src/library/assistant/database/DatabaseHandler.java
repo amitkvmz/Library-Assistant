@@ -17,8 +17,11 @@ public final class DatabaseHandler {
 
     private DatabaseHandler() throws SQLException {
         createConnection();
+
+        setupIssueTable();
         setupBookTable();
         setupMemberTable();
+
     }
 
     public static DatabaseHandler getInstance() throws SQLException {
@@ -53,8 +56,9 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if (tables.next()) {
-                System.out.println("Table" + TABLE_NAME + " already exists. we are ready");
-                //  stmt.execute("drop table "+TABLE_NAME);
+                System.out.println("Table   : " + TABLE_NAME + " already exists. we are ready");
+                
+//  stmt.execute("drop table "+TABLE_NAME);
                 //       System.out.println("dropping table");
             } else {
 
@@ -91,7 +95,7 @@ public final class DatabaseHandler {
             return true;
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro : " + ex.getMessage(), "error occured", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error : " + ex.getMessage(), "error occured", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -104,7 +108,7 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if (tables.next()) {
-                System.out.println("Table" + TABLE_NAME + " already exists. we are ready");
+                System.out.println("Table   : " + TABLE_NAME + " already exists. we are ready");
                 //  stmt.execute("drop table "+TABLE_NAME);
                 //       System.out.println("dropping table");
             } else {
@@ -121,5 +125,35 @@ public final class DatabaseHandler {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void setupIssueTable() {
+        String TABLE_NAME = "ISSUE";
+        try {
+            stmt = conn.createStatement();
+            DatabaseMetaData dbm = conn.getMetaData();
+
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+
+            if (tables.next()) {
+                System.out.println("Table : " + TABLE_NAME + " already exists. we are ready");
+                //  stmt.execute("drop table "+TABLE_NAME);
+                //       System.out.println("dropping table");
+            } else {
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "     bookId varchar(200) primary Key, \n"
+                        + "     memberId varchar(200), \n   "
+                        + "     issueTime timestamp default CURRENT_TIMESTAMP  ,\n "
+                        + "     renew_count integer default 0, \n "
+                        + "     FOREIGN KEY (bookId) REFERENCES BOOK(id), \n"
+                        + "     FOREIGN KEY (memberId) REFERENCES MEMBER(id) \n"
+                        + " )");
+                
+                System.out.println("issue table created for the first time");
+            }
+
+        } catch (SQLException e) {
+        }
+
     }
 }
