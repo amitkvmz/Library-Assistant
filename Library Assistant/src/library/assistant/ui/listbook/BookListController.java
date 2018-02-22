@@ -8,6 +8,7 @@ package library.assistant.ui.listbook;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,12 +16,17 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
 
 /**
@@ -84,7 +90,31 @@ public class BookListController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tableView.getItems().setAll(list);
+          tableView.setItems(list);   //   tableView.getItems().setAll(list);
+    }
+
+    @FXML
+    private void context_menu_delete(ActionEvent event) throws SQLException {
+        Book bookselected = tableView.getSelectionModel().getSelectedItem();
+        if(bookselected==null) {
+            AlertMaker.showErrorAlert("Error", "No book Selected.");
+        return;
+        }
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Are you sure want to delete the "+bookselected.getTitle()+" ?");
+        Optional<ButtonType> answer = alert.showAndWait();
+        if(answer.get()==ButtonType.OK) {
+            Boolean result  = DatabaseHandler.getInstance().deleteBook(bookselected);
+            if (result) {
+                AlertMaker.showSimpleAlert("Success", "Book has been deleted successfully.");
+                list.remove(bookselected);
+            } else {
+                AlertMaker.showErrorAlert("Failed", "Failed to delete Book");
+            }
+        }else {
+            AlertMaker.showSimpleAlert("Cancelled", "You cancelled the book deletion");
+        }
+        
     }
 
     public static class Book {

@@ -3,15 +3,18 @@ package library.assistant.database;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import library.assistant.alert.AlertMaker;
+import library.assistant.ui.listbook.BookListController.Book;
 
 public final class DatabaseHandler {
 
     private static DatabaseHandler handler = null;
-    private static final String DB_URL = "jdbc:derby:database;create=true";
+    private static final String DB_URL = "jdbc:derby:librarydatabase;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
 
@@ -45,7 +48,29 @@ public final class DatabaseHandler {
             conn = DriverManager.getConnection(DB_URL);
 
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Can't Load Database", "Database Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
+
+    }
+
+    public boolean deleteBook(Book book) throws SQLException {
+        try {
+            String deleteStatement = "DELETE FROM BOOK WHERE ID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(deleteStatement);
+            pstmt.setString(1, book.getId());
+            System.out.println(book.getId());
+            System.out.print(deleteStatement);
+//          pstmt.executeUpdate();
+            if (pstmt.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+
+            AlertMaker.showErrorAlert("Failed ", "Failed to delete Book.");
+            return false;
+        }
+        return false;
 
     }
 
@@ -57,7 +82,7 @@ public final class DatabaseHandler {
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if (tables.next()) {
                 System.out.println("Table   : " + TABLE_NAME + " already exists. we are ready");
-                
+
 //  stmt.execute("drop table "+TABLE_NAME);
                 //       System.out.println("dropping table");
             } else {
@@ -148,7 +173,7 @@ public final class DatabaseHandler {
                         + "     FOREIGN KEY (bookId) REFERENCES BOOK(id), \n"
                         + "     FOREIGN KEY (memberId) REFERENCES MEMBER(id) \n"
                         + " )");
-                
+
                 System.out.println("issue table created for the first time");
             }
 
