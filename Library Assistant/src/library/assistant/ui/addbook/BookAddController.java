@@ -20,7 +20,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.listbook.BookListController;
+import library.assistant.ui.listbook.BookListController.Book;
 
 /**
  *
@@ -42,6 +45,8 @@ public class BookAddController implements Initializable {
     @FXML
     private JFXButton cancelButton;
 
+    private Boolean isInEditMode = Boolean.FALSE ;
+
     DatabaseHandler databaseHandler;
     @FXML
     private AnchorPane rootPane;
@@ -59,12 +64,13 @@ public class BookAddController implements Initializable {
     }
 
     @FXML
-    private void addBook(ActionEvent event) {
+    private void addBook(ActionEvent event) throws SQLException {
+
         String bookID = id.getText();
         String bookAuthor = author.getText();
         String bookName = title.getText();
         String bookPublisher = publisher.getText();
-        System.out.println(bookID+" "+bookAuthor+" "+bookName+" "+bookPublisher);
+        System.out.println(bookID + " " + bookAuthor + " " + bookName + " " + bookPublisher);
 
         if (bookID.isEmpty() || bookAuthor.isEmpty() || bookName.isEmpty() || bookPublisher.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -80,9 +86,14 @@ public class BookAddController implements Initializable {
 //                        + "     publisher varchar(100), \n "
 //                        + "     isAvail boolean default true "
 //                        + " )");
+            if (isInEditMode) {
+                handleUpdateBookOperation();
+                return;
+            }
+
             String query = "INSERT INTO book VALUES ( '" + bookID + "','" + bookName + "','" + bookAuthor + "','" + bookPublisher + "',true)";
             if (databaseHandler.execAction(query)) {
-               // System.out.println("i failed here");
+                // System.out.println("i failed here");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
                 alert.setContentText("Success ");
@@ -98,17 +109,39 @@ public class BookAddController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
-        Stage stage = (Stage)rootPane.getScene().getWindow();
+        Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
-        
+
+    }
+
+    public void infalateUI(BookListController.Book book) {
+        System.out.println(book.getPublisher() + " " + book.getId() + " " + book.getAuthor() + " " + book.getTitle());
+        System.out.println(author + " " + publisher + " " + title + " " + id);
+
+        id.setText(book.getId());
+        id.setEditable(false);
+        author.setText(book.getAuthor());
+        publisher.setText(book.getPublisher());
+        title.setText(book.getTitle());
+        isInEditMode = Boolean.TRUE;
     }
 
     private void checkData() throws SQLException {
-        String qu ="Select title from BOOK";
-        ResultSet rs =  databaseHandler.execQuery(qu);
-        while(rs.next()){
+        String qu = "Select title from BOOK";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        while (rs.next()) {
             System.out.println(rs.getString("title"));
         }
     }
 
+    private void handleUpdateBookOperation() throws SQLException {
+        BookListController.Book book = new BookListController.Book(title.getText(), id.getText(), author.getText(), publisher.getText(), true);
+        if(DatabaseHandler.getInstance().bookUpdate(book)) {
+            AlertMaker.showSimpleAlert("success","Book Successfully updated" );
+//            ((Stage)title.getScene().getWindow()).close();
+            
+        }else {
+            AlertMaker.showErrorAlert("Failed", "Failed to update Book");
+        }
+    }
 }

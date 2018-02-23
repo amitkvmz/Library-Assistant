@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import library.assistant.alert.AlertMaker;
+import library.assistant.ui.listbook.BookListController;
 import library.assistant.ui.listbook.BookListController.Book;
 
 public final class DatabaseHandler {
@@ -180,5 +181,45 @@ public final class DatabaseHandler {
         } catch (SQLException e) {
         }
 
+    }
+
+    public boolean isBookAlreadyIssued(Book book) {
+        try {
+            String checkSt = "SELECT COUNT(*) FROM ISSUE WHERE bookId = ?";
+            PreparedStatement pstmt = conn.prepareStatement(checkSt);
+            pstmt.setString(1, book.getId());
+            System.out.println("book id chcecking to be deleted" + book.getId());
+            System.out.print(checkSt);
+            ResultSet rs = pstmt.executeQuery();
+
+//          pstmt.executeUpdate();
+            if (rs.next()) {
+                if (rs.getInt(1) > 0) {
+
+                    System.out.println("Got entry in issue table");
+                    return true;
+                }
+
+            } else {
+                System.out.println("Got no entry in issue table");
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("got some exception ");
+            // AlertMaker.showErrorAlert("Can't Delete","This book has been already issued");
+            return false;
+        }
+        return false;
+    }
+
+    public boolean bookUpdate(Book book) throws SQLException {
+        String query = "UPDATE BOOK set title = ?, author = ?, publisher=? where id =?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, book.getTitle());
+        pstmt.setString(2, book.getAuthor());
+        pstmt.setString(3, book.getPublisher());
+        pstmt.setString(4, book.getId());
+        int res = pstmt.executeUpdate();
+        return (res > 0);
     }
 }
