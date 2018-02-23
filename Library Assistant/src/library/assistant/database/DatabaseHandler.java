@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import library.assistant.alert.AlertMaker;
 import library.assistant.ui.listbook.BookListController;
 import library.assistant.ui.listbook.BookListController.Book;
+import library.assistant.ui.listmember.MemberListController.Member;
 
 public final class DatabaseHandler {
 
@@ -73,6 +74,23 @@ public final class DatabaseHandler {
         }
         return false;
 
+    }
+
+    public boolean deleteMember(Member member) throws SQLException {
+        try {
+            String deleteStatement = "DELETE FROM MEMBER WHERE ID =?";
+            PreparedStatement pstmt = conn.prepareStatement(deleteStatement);
+            pstmt.setString(1, member.getId());
+            System.out.println("Member deleted  is : " + member.getId());
+            if (pstmt.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            AlertMaker.showErrorAlert("Failed", "Failed to delte member");
+            return false;
+        }
+
+        return false;
     }
 
     void setupBookTable() {
@@ -219,6 +237,17 @@ public final class DatabaseHandler {
         pstmt.setString(2, book.getAuthor());
         pstmt.setString(3, book.getPublisher());
         pstmt.setString(4, book.getId());
+        int res = pstmt.executeUpdate();
+        return (res > 0);
+    }
+
+    public boolean memberUpdate(Member member) throws SQLException {
+        String query = "UPDATE MEMBER set name = ?, mobile = ?, email=? where id =?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, member.getName());
+        pstmt.setString(2, member.getMobile());
+        pstmt.setString(3, member.getEmail());
+        pstmt.setString(4, member.getId());
         int res = pstmt.executeUpdate();
         return (res > 0);
     }
